@@ -30,7 +30,6 @@ class ufw::nat {
 		  present => 'set DEFAULT_FORWARD_POLICY \'"ACCEPT"\'',
 		  default => 'set DEFAULT_FORWARD_POLICY \'"DROP"\'',
 		},
-		notify => Service['ufw']
 	}
 
 }
