@@ -11,11 +11,11 @@
 # nat Table rules
 *nat
 :POSTROUTING ACCEPT [0:0]
-
-# Forward traffic through ppp0 - Change to match you out-interface
--A POSTROUTING -o eth0 -j MASQUERADE
-
-# don't delete the 'COMMIT' line or these rules won't be processed
+<% if nat_rules.is_a?(Array) -%>
+<% nat_rules.each do |rule| -%>
+<%= rule %>
+<% end -%>
+<% end -%>
 COMMIT
 
 # Don't delete these required lines, otherwise there will be errors
@@ -26,8 +26,11 @@ COMMIT
 :ufw-not-local - [0:0]
 # End required lines
 
--A ufw-before-forward -i eth0 -o eth2 -m state --state ESTABLISHED,RELATED -j ACCEPT
--A ufw-before-forward -i eth2 -o eth0 -j ACCEPT
+<% if filter_rules.is_a?(Array) -%>
+<% filter_rules.each do |rule| -%>
+<%= rule %>
+<% end -%>
+<% end -%>
 
 # allow all on loopback
 -A ufw-before-input -i lo -j ACCEPT
