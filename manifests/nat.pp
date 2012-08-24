@@ -30,14 +30,14 @@ class ufw::nat($ensure = present, $filter_rules = false, $nat_rules = false) {
     before  => Exec['ufw-enable'],
   }
 
-	augeas { "ufw-manage-builtins-conf":
-		context => '/files/etc/default/ufw',
-		changes => $ensure ? {
-		  present => 'set MANAGE_BUILTINS yes',
-		  default => 'set MANAGE_BUILTINS no',
-		},
-		require => Exec['ufw-default-deny'],
-		before  => Exec['ufw-enable'],
-	}
+  augeas { "ufw-manage-builtins-conf":
+    context => '/files/etc/default/ufw',
+      changes => $ensure ? {
+      present => 'set MANAGE_BUILTINS yes',
+      default => 'set MANAGE_BUILTINS no',
+    },
+    require => Exec['ufw-default-deny'],
+    before  => Exec['ufw-enable'],
+  }
 
 }
