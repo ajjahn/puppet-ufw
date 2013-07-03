@@ -25,7 +25,7 @@ class ufw {
   Package['ufw'] -> Exec['iptables-flush'] -> Exec['ufw-default-deny'] -> Exec['ufw-enable']
 
   exec { 'iptables-flush':
-    command => 'iptables -F',
+    command => 'iptables -F && /etc/init.d/iptables save',
     unless  => 'ufw status verbose | grep "Default: deny (incoming), allow (outgoing)"',
   }
 
